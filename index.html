@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="styles.css?v=weekly-jackets-2" />
+    <link rel="stylesheet" href="styles.css?v=natural-layout-1" />
     <script src="app.js?v=weekly-jackets-3" defer></script>
   </head>
   <body>
@@ -66,6 +66,12 @@
           </article>
         </section>
 
+        <section class="panel week-panel" aria-label="Seven day forecast">
+          <div class="panel-heading"><div><p class="eyebrow">The week ahead</p><h2>7-day forecast</h2></div><span class="small-label">DAILY OUTLOOK</span></div>
+          <div class="week-columns" aria-hidden="true"><span>DAY</span><span>FORECAST</span><span>TEMPERATURE</span><span>RAIN</span><span>WHAT TO WEAR</span></div>
+          <div class="week-list" id="week-forecast"></div>
+        </section>
+
         <section class="lower-grid" aria-label="Forecast details">
           <article class="panel hourly-panel">
             <div class="panel-heading"><div><p class="eyebrow">Plan your layers</p><h2>Coming up</h2></div><span class="small-label">NEXT 6 HOURS</span></div>
@@ -79,17 +85,12 @@
               <div><span aria-hidden="true">◌</span><small>Humidity</small><strong id="humidity">--%</strong></div>
             </div>
           </article>
-          <article class="panel sources-panel">
-            <div class="panel-heading"><div><p class="eyebrow">Forecast check</p><h2>Five weather models</h2></div><span class="small-label">RIGHT NOW</span></div>
-            <div class="source-list" id="source-list" aria-live="polite"></div>
-          </article>
         </section>
-        <section class="panel week-panel" aria-label="Seven day forecast">
-          <div class="panel-heading"><div><p class="eyebrow">The week ahead</p><h2>7-day forecast</h2></div><span class="small-label">DAILY OUTLOOK</span></div>
-          <div class="week-columns" aria-hidden="true"><span>DAY</span><span>FORECAST</span><span>TEMPERATURE</span><span>RAIN</span><span>WHAT TO WEAR</span></div>
-          <div class="week-list" id="week-forecast"></div>
-        </section>
-        <p class="attribution">Weather data via <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a>. Model forecasts: ECMWF, UK Met Office, DWD, NOAA and Météo-France.</p>
+        <details class="source-details">
+          <summary><span>Forecast sources</span><small>5 weather models</small></summary>
+          <div class="source-list" id="source-list" aria-live="polite"></div>
+        </details>
+        <p class="attribution">Weather data via <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a>.</p>
       </div>
     </main>
     <footer><span>Weather Jacket</span><span>Good layers, better days.</span></footer>

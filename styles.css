@@ -76,8 +76,13 @@ h1 { margin-bottom: 0; font: 500 clamp(36px, 5vw, 54px)/1.04 "Fraunces", Georgia
 .conditions div > span { grid-row: span 2; color: #627858; font-size: 17px; }
 .conditions small { color: #767d71; font-size: 9px; white-space: nowrap; }
 .conditions strong { color: var(--ink); font-size: 11px; font-weight: 600; white-space: nowrap; }
-.sources-panel { grid-column: 1 / -1; min-height: 0; }
-.source-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 16px; }
+.source-details { margin-top: 12px; border-block: 1px solid var(--line); }
+.source-details summary { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 3px; color: #435144; cursor: pointer; font-size: 11px; font-weight: 700; list-style: none; }
+.source-details summary::-webkit-details-marker { display: none; }
+.source-details summary::after { content: "+"; color: #65715f; font-size: 16px; font-weight: 400; }
+.source-details[open] summary::after { content: "−"; }
+.source-details summary small { margin-left: auto; color: #858b7d; font-size: 9px; font-weight: 500; }
+.source-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; padding-bottom: 14px; }
 .source-row { min-width: 0; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px; border-radius: 5px; background: #f0f1e9; }
 .source-row > span:first-child { min-width: 0; display: grid; gap: 3px; }
 .source-row strong { overflow: hidden; color: #3a483a; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
@@ -118,7 +123,6 @@ footer span:first-child { color: var(--ink); font-weight: 700; }
   .weather-panel { min-height: 275px; }
   .jacket-panel { min-height: 255px; }
   .jacket-panel img { height: 205px; }
-  .sources-panel { grid-column: auto; }
   .source-list { grid-template-columns: 1fr 1fr; }
   .week-columns { display: none; }
   .day-row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding: 13px 5px; }
