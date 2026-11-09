@@ -130,7 +130,7 @@ function renderForecast(data) {
     const advice = jacketAdvice(daily.temperature_2m_min[index], daily.weather_code[index], wind, rain);
     const row = document.createElement("article");
     row.className = "day-row";
-    row.innerHTML = `<div class="day-date"><strong>${label}</strong><small>${calendarDate}</small></div><div class="day-condition"><span class="day-icon" aria-hidden="true">${icon}</span><span>${condition}</span></div><div class="day-temperature"><strong>${displayTemp(daily.temperature_2m_max[index])}</strong><span>${displayTemp(daily.temperature_2m_min[index])} low</span></div><div class="day-rain"><span aria-hidden="true">☂</span>${rain}%</div><div class="day-jacket"><span class="jacket-mark" aria-hidden="true">▰</span><span class="day-jacket-copy"><strong>${advice.title}</strong><small>${advice.reason}</small></span></div>`;
+    row.innerHTML = `<div class="day-date"><strong>${label}</strong><small>${calendarDate}</small></div><div class="day-condition"><span class="day-icon" aria-hidden="true">${icon}</span><span>${condition}</span></div><div class="day-temperature"><strong>${displayTemp(daily.temperature_2m_max[index])}</strong><span>${displayTemp(daily.temperature_2m_min[index])} low</span></div><div class="day-rain"><span aria-hidden="true">☂</span>${rain}%</div><div class="day-jacket"><span class="jacket-mark" aria-hidden="true">🧥</span><span class="day-jacket-copy"><strong>${advice.title}</strong><small>${advice.reason}</small></span></div>`;
     return row;
   }));
   $("#date-label").textContent = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: data.weather.timezone }).format(new Date(current.time));
