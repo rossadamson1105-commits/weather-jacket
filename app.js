@@ -19,9 +19,34 @@ let forecastData;
 let locationLabel = "Glasgow, Scotland";
 
 const $ = (selector) => document.querySelector(selector);
+const themeToggle = $("#theme-toggle");
 const toDisplayTemp = (fahrenheit) => Math.round(unit === "fahrenheit" ? fahrenheit : (fahrenheit - 32) * 5 / 9);
 const displayTemp = (fahrenheit) => `${toDisplayTemp(fahrenheit)}°`;
 const weatherCode = (code) => codeInfo[code] || ["Variable", "☁"];
+
+function setTheme(theme, save = false) {
+  const isDark = theme === "dark";
+  document.documentElement.dataset.theme = isDark ? "dark" : "light";
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+  themeToggle.setAttribute("aria-label", `Switch to ${isDark ? "light" : "dark"} mode`);
+  themeToggle.title = `Switch to ${isDark ? "light" : "dark"} mode`;
+  $("#theme-icon").textContent = isDark ? "☀" : "☾";
+  $("#theme-label").textContent = isDark ? "Light" : "Dark";
+  $("meta[name='theme-color']").content = isDark ? "#151d19" : "#f4f4ef";
+  if (save) {
+    try { localStorage.setItem("weather-jacket-theme", isDark ? "dark" : "light"); } catch {}
+  }
+}
+
+let preferredTheme = "light";
+try {
+  const savedTheme = localStorage.getItem("weather-jacket-theme");
+  preferredTheme = savedTheme || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+} catch {}
+setTheme(preferredTheme);
+themeToggle.addEventListener("click", () => {
+  setTheme(document.documentElement.dataset.theme === "dark" ? "light" : "dark", true);
+});
 
 function jacketAdvice(feelsLike, code, wind, rainChance) {
   const wet = rainCodes.has(code) || rainChance >= 40;
