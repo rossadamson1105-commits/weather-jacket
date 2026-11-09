@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f2f2eb" />
+    <meta name="description" content="Glasgow weather and a jacket recommendation for the day." />
+    <title>Weather Jacket | Glasgow</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="wordmark" href="./"><span class="brand-mark" aria-hidden="true">W</span>weather jacket</a>
+      <div class="tools">
+        <div class="unit-switch" role="group" aria-label="Temperature units">
+          <button class="unit" data-unit="fahrenheit" aria-pressed="false" type="button">°F</button>
+          <button class="unit active" data-unit="celsius" aria-pressed="true" type="button">°C</button>
+        </div>
+        <button class="locate" id="locate" type="button" title="Use my location"><span aria-hidden="true">◎</span> My location</button>
+      </div>
+    </header>
+
+    <main class="shell">
+      <section class="intro">
+        <div>
+          <p class="eyebrow">A forecast you can wear</p>
+          <h1>Dress for the day.</h1>
+        </div>
+        <form class="search" id="search-form" role="search">
+          <label class="visually-hidden" for="city-input">Search for a city</label>
+          <span aria-hidden="true">⌕</span>
+          <input id="city-input" type="search" placeholder="Search a city" autocomplete="off" required />
+          <button type="submit">Go</button>
+        </form>
+      </section>
+
+      <p class="status" id="status" role="status" aria-live="polite">Getting Glasgow's forecast...</p>
+
+      <div class="dashboard" id="dashboard" hidden>
+        <section class="top-grid" aria-label="Current weather and jacket recommendation">
+          <article class="weather-panel">
+            <div class="weather-heading">
+              <div><p class="eyebrow light" id="date-label">TODAY</p><h2 id="city-name">Glasgow, Scotland</h2><p id="description">Loading weather...</p></div>
+              <span class="weather-icon" id="weather-icon" aria-hidden="true">☁</span>
+            </div>
+            <div class="temp-row">
+              <p class="temperature" id="temperature">--°</p>
+              <div class="temp-meta"><span>Feels like <strong id="feels-like">--°</strong></span><span>High <strong id="high">--°</strong> · Low <strong id="low">--°</strong></span></div>
+            </div>
+            <p class="weather-note">A good day to get outside. <span>LOCAL FORECAST</span></p>
+          </article>
+
+          <article class="jacket-panel">
+            <div class="jacket-copy">
+              <p class="eyebrow">Your outer layer</p>
+              <p class="pick-label">TODAY'S PICK</p>
+              <h2 id="jacket-title">Light jacket</h2>
+              <p class="jacket-reason" id="jacket-reason">Just right for the day.</p>
+              <div class="tags" id="jacket-tags"></div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=720&q=85" alt="A neutral-toned jacket" />
+          </article>
+        </section>
+
+        <section class="lower-grid" aria-label="Forecast details">
+          <article class="panel hourly-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Plan your layers</p><h2>Coming up</h2></div><span class="small-label">NEXT 6 HOURS</span></div>
+            <div class="hourly" id="hourly"></div>
+          </article>
+          <article class="panel conditions-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Outside right now</p><h2>Conditions</h2></div><span class="sun-mark" aria-hidden="true">✳</span></div>
+            <div class="conditions">
+              <div><span aria-hidden="true">↗</span><small>Wind</small><strong id="wind">-- mph</strong></div>
+              <div><span aria-hidden="true">⌁</span><small>Rain chance</small><strong id="rain">--%</strong></div>
+              <div><span aria-hidden="true">◌</span><small>Humidity</small><strong id="humidity">--%</strong></div>
+            </div>
+          </article>
+          <article class="panel sources-panel">
+            <div class="panel-heading"><div><p class="eyebrow">Forecast check</p><h2>Five weather models</h2></div><span class="small-label">RIGHT NOW</span></div>
+            <div class="source-list" id="source-list" aria-live="polite"></div>
+          </article>
+        </section>
+        <p class="attribution">Weather data via <a href="https://open-meteo.com/" target="_blank" rel="noreferrer">Open-Meteo</a>. Model forecasts: ECMWF, UK Met Office, DWD, NOAA and Météo-France.</p>
+      </div>
+    </main>
+    <footer><span>Weather Jacket</span><span>Good layers, better days.</span></footer>
+  </body>
+</html>
