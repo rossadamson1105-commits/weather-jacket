@@ -119,6 +119,16 @@ function renderForecast(data) {
     hour.innerHTML = `<span>${label}</span><b aria-hidden="true">${icon}</b><strong>${displayTemp(hourly.temperature_2m[index])}</strong>`;
     return hour;
   }));
+  $("#week-forecast").replaceChildren(...daily.time.map((date, index) => {
+    const weekday = new Intl.DateTimeFormat(undefined, { weekday: "short", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
+    const label = index === 0 ? "Today" : index === 1 ? "Tomorrow" : weekday;
+    const condition = weatherCode(daily.weather_code[index]);
+    const rain = daily.precipitation_probability_max[index];
+    const card = document.createElement("div");
+    card.className = "day-card";
+    card.innerHTML = `<span class="day-name">${label}</span><span class="day-icon" aria-hidden="true">${condition[1]}</span><span class="day-condition">${condition[0]}</span><strong>${displayTemp(daily.temperature_2m_max[index])}</strong><span class="day-low">${displayTemp(daily.temperature_2m_min[index])}</span><span class="day-rain">Rain ${rain ?? 0}%</span>`;
+    return card;
+  }));
   $("#date-label").textContent = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: data.weather.timezone }).format(new Date(current.time));
   $("#dashboard").hidden = false;
   $("#status").hidden = true;
@@ -132,8 +142,8 @@ async function loadWeather(latitude, longitude, location) {
     latitude, longitude,
     current: "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m",
     hourly: "temperature_2m,precipitation_probability,weather_code",
-    daily: "temperature_2m_max,temperature_2m_min",
-    temperature_unit: "fahrenheit", wind_speed_unit: "mph", timezone: "auto", forecast_days: "1",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    temperature_unit: "fahrenheit", wind_speed_unit: "mph", timezone: "auto", forecast_days: "7",
   });
   const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
   if (!response.ok) throw new Error("Weather data is temporarily unavailable.");
