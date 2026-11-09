@@ -120,14 +120,18 @@ function renderForecast(data) {
     return hour;
   }));
   $("#week-forecast").replaceChildren(...daily.time.map((date, index) => {
-    const weekday = new Intl.DateTimeFormat(undefined, { weekday: "short", timeZone: "UTC" }).format(new Date(`${date}T12:00:00Z`));
+    const dateValue = new Date(`${date}T12:00:00Z`);
+    const weekday = new Intl.DateTimeFormat(undefined, { weekday: "short", timeZone: "UTC" }).format(dateValue);
+    const calendarDate = new Intl.DateTimeFormat(undefined, { month: "short", day: "numeric", timeZone: "UTC" }).format(dateValue);
     const label = index === 0 ? "Today" : index === 1 ? "Tomorrow" : weekday;
-    const condition = weatherCode(daily.weather_code[index]);
-    const rain = daily.precipitation_probability_max[index];
-    const card = document.createElement("div");
-    card.className = "day-card";
-    card.innerHTML = `<span class="day-name">${label}</span><span class="day-icon" aria-hidden="true">${condition[1]}</span><span class="day-condition">${condition[0]}</span><strong>${displayTemp(daily.temperature_2m_max[index])}</strong><span class="day-low">${displayTemp(daily.temperature_2m_min[index])}</span><span class="day-rain">Rain ${rain ?? 0}%</span>`;
-    return card;
+    const [condition, icon] = weatherCode(daily.weather_code[index]);
+    const rain = daily.precipitation_probability_max[index] ?? 0;
+    const wind = daily.wind_speed_10m_max[index] ?? current.wind_speed_10m;
+    const advice = jacketAdvice(daily.temperature_2m_min[index], daily.weather_code[index], wind, rain);
+    const row = document.createElement("article");
+    row.className = "day-row";
+    row.innerHTML = `<div class="day-date"><strong>${label}</strong><small>${calendarDate}</small></div><div class="day-condition"><span class="day-icon" aria-hidden="true">${icon}</span><span>${condition}</span></div><div class="day-temperature"><strong>${displayTemp(daily.temperature_2m_max[index])}</strong><span>${displayTemp(daily.temperature_2m_min[index])} low</span></div><div class="day-rain"><span aria-hidden="true">☂</span>${rain}%</div><div class="day-jacket"><span class="jacket-mark" aria-hidden="true">▰</span><span class="day-jacket-copy"><strong>${advice.title}</strong><small>${advice.reason}</small></span></div>`;
+    return row;
   }));
   $("#date-label").textContent = new Intl.DateTimeFormat(undefined, { weekday: "long", month: "long", day: "numeric", timeZone: data.weather.timezone }).format(new Date(current.time));
   $("#dashboard").hidden = false;
@@ -142,7 +146,7 @@ async function loadWeather(latitude, longitude, location) {
     latitude, longitude,
     current: "temperature_2m,relative_humidity_2m,apparent_temperature,is_day,weather_code,wind_speed_10m",
     hourly: "temperature_2m,precipitation_probability,weather_code",
-    daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max",
+    daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max",
     temperature_unit: "fahrenheit", wind_speed_unit: "mph", timezone: "auto", forecast_days: "7",
   });
   const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);

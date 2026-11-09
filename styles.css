@@ -85,14 +85,24 @@ h1 { margin-bottom: 0; font: 500 clamp(36px, 5vw, 54px)/1.04 "Fraunces", Georgia
 .source-value { color: #2f5142; font-size: 13px; font-weight: 700; white-space: nowrap; }
 .source-unavailable { color: #858b7d; font-size: 9px; white-space: nowrap; }
 .week-panel { margin-top: 15px; }
-.week-list { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
-.day-card { min-width: 0; display: grid; justify-items: center; gap: 7px; padding: 11px 5px 10px; border-radius: 5px; background: #f0f1e9; text-align: center; }
-.day-name { color: #596354; font-size: 10px; font-weight: 700; }
-.day-icon { color: #597250; font-size: 19px; line-height: 1.1; }
-.day-condition { max-width: 100%; overflow: hidden; color: #767d71; font-size: 8px; text-overflow: ellipsis; white-space: nowrap; }
-.day-card strong { color: var(--ink); font-size: 12px; font-weight: 700; }
-.day-low { color: #777e72; font-size: 10px; }
-.day-rain { color: #627858; font-size: 8px; white-space: nowrap; }
+.week-columns, .day-row { display: grid; grid-template-columns: minmax(100px, .75fr) minmax(145px, 1.1fr) minmax(105px, .7fr) minmax(72px, .5fr) minmax(245px, 1.7fr); align-items: center; column-gap: 16px; }
+.week-columns { margin-top: 23px; padding: 0 13px 9px; color: #81877b; font-size: 8px; font-weight: 700; letter-spacing: .8px; }
+.week-list { border-top: 1px solid var(--line); }
+.day-row { min-height: 66px; padding: 10px 13px; border-bottom: 1px solid var(--line); }
+.day-row:last-child { border-bottom: 0; }
+.day-date, .day-jacket-copy { min-width: 0; display: grid; gap: 3px; }
+.day-date strong { color: #384739; font-size: 12px; font-weight: 700; }
+.day-date small, .day-jacket-copy small { color: #777e72; font-size: 9px; line-height: 1.4; }
+.day-condition { display: flex; align-items: center; gap: 9px; color: #596354; font-size: 11px; }
+.day-icon { width: 23px; color: #597250; font-size: 18px; text-align: center; }
+.day-temperature { display: flex; align-items: baseline; gap: 8px; }
+.day-temperature strong { color: var(--ink); font-size: 15px; font-weight: 700; }
+.day-temperature span { color: #777e72; font-size: 10px; }
+.day-rain { display: flex; align-items: center; gap: 6px; color: #627858; font-size: 11px; }
+.day-rain span { font-size: 13px; }
+.day-jacket { min-width: 0; display: flex; align-items: center; gap: 9px; }
+.jacket-mark { width: 26px; height: 26px; flex: 0 0 26px; display: grid; place-items: center; border-radius: 50%; background: #e4e9dc; color: var(--green); font-size: 14px; }
+.day-jacket-copy strong { color: #344a39; font-size: 10px; font-weight: 700; }
 .attribution { margin: 12px 0 0; color: #858b7d; font-size: 9px; }
 .attribution a { color: inherit; }
 footer { min-height: 54px; display: flex; align-items: center; justify-content: space-between; padding: 0 max(5vw, 22px); border-top: 1px solid #242a251f; color: #767d71; font-size: 10px; }
@@ -110,8 +120,14 @@ footer span:first-child { color: var(--ink); font-weight: 700; }
   .jacket-panel img { height: 205px; }
   .sources-panel { grid-column: auto; }
   .source-list { grid-template-columns: 1fr 1fr; }
-  .week-list { display: flex; overflow-x: auto; padding-bottom: 5px; }
-  .day-card { flex: 0 0 88px; }
+  .week-columns { display: none; }
+  .day-row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; padding: 13px 5px; }
+  .day-date { grid-column: 1; grid-row: 1; }
+  .day-condition { grid-column: 1; grid-row: 2; }
+  .day-temperature { grid-column: 2; grid-row: 1; justify-self: end; }
+  .day-rain { grid-column: 2; grid-row: 2; justify-self: end; }
+  .day-jacket { grid-column: 1 / -1; padding-top: 3px; }
+  .day-jacket-copy small { font-size: 9px; }
   .lower-grid { gap: 12px; }
 }
 @media (max-width: 420px) {
